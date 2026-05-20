@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura del Backend | Student Scheduler API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hex {
+            clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+        }
+        body { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-800 text-white py-16">
+        <div class="container mx-auto px-6 text-center">
+            <i class="fa-solid fa-graduation-cap text-6xl mb-4 text-blue-300"></i>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Student Scheduler API</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">Una mirada profunda a la arquitectura, stack tecnológico y flujos de negocio del backend para agendamiento de clases.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 space-y-16">
+
+        <!-- Stack Tecnológico -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-800"><i class="fa-solid fa-layer-group text-indigo-600 mr-2"></i>Stack Tecnológico</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <i class="fa-brands fa-node-js text-5xl text-red-600 mb-3"></i>
+                    <h3 class="font-semibold">NestJS</h3>
+                    <p class="text-xs text-gray-500">Framework principal</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <i class="fa-solid fa-leaf text-5xl text-green-600 mb-3"></i>
+                    <h3 class="font-semibold">MongoDB</h3>
+                    <p class="text-xs text-gray-500">Base de datos NoSQL</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <i class="fa-solid fa-database text-5xl text-red-500 mb-3"></i>
+                    <h3 class="font-semibold">Redis</h3>
+                    <p class="text-xs text-gray-500">Blacklist de JWT</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <i class="fa-solid fa-key text-5xl text-yellow-500 mb-3"></i>
+                    <h3 class="font-semibold">JWT & Bcrypt</h3>
+                    <p class="text-xs text-gray-500">Autenticación</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <i class="fa-brands fa-docker text-5xl text-blue-500 mb-3"></i>
+                    <h3 class="font-semibold">Docker</h3>
+                    <p class="text-xs text-gray-500">Contenedorización</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arquitectura Hexagonal -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-800"><i class="fa-solid fa-hexagon-nodes text-indigo-600 mr-2"></i>Arquitectura Hexagonal</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <!-- Presentation -->
+                <div class="w-full md:w-1/4 text-center">
+                    <div class="bg-blue-100 text-blue-800 p-4 rounded-lg font-bold mb-2 shadow-inner">Presentation (API)</div>
+                    <p class="text-sm text-gray-600">Controllers, DTOs, Guards. Recibe peticiones HTTP (Postman/App).</p>
+                </div>
+                <i class="fa-solid fa-arrow-right text-gray-300 hidden md:block text-2xl"></i>
+                <i class="fa-solid fa-arrow-down text-gray-300 block md:hidden text-2xl"></i>
+                <!-- Application -->
+                <div class="w-full md:w-1/4 text-center">
+                    <div class="bg-indigo-100 text-indigo-800 p-4 rounded-lg font-bold mb-2 shadow-inner">Application</div>
+                    <p class="text-sm text-gray-600">Casos de Uso (Services). Contiene la lógica de negocio pura.</p>
+                </div>
+                <i class="fa-solid fa-arrow-right text-gray-300 hidden md:block text-2xl"></i>
+                <i class="fa-solid fa-arrow-down text-gray-300 block md:hidden text-2xl"></i>
+                <!-- Domain -->
+                <div class="w-full md:w-1/4 text-center">
+                    <div class="bg-purple-100 text-purple-800 p-4 rounded-lg font-bold mb-2 shadow-inner">Domain & Infra</div>
+                    <p class="text-sm text-gray-600">Entidades, Puertos e Implementación con MongoDB (Mongoose).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reglas de Negocio Avanzadas -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-800"><i class="fa-solid fa-brain text-indigo-600 mr-2"></i>Reglas de Negocio Implementadas</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Soft Delete -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-red-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fa-solid fa-user-slash text-2xl text-red-500 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Borrado Lógico & Cascada (Soft Delete)</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Nunca borramos usuarios físicamente para proteger la reportería. Actualizamos <code class="bg-gray-100 px-1 rounded text-red-600">isActive: false</code>.</p>
+                    <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                        <li><b>Si es Estudiante:</b> Se desinscribe automáticamente de todas sus clases, liberando sus cupos al instante.</li>
+                        <li><b>Si es Profesor:</b> Sus clases futuras pasan a estado <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">CANCELLED</span> de forma automática.</li>
+                    </ul>
+                </div>
+
+                <!-- Auditoría de Cupos -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-green-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fa-solid fa-chart-line text-2xl text-green-500 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Auditoría Doble de Cupos</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Las clases (Classes) manejan dos contadores diferentes para soportar el módulo de reportería del Administrador:</p>
+                    <ul class="text-sm text-gray-600 space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                            <span><b>enrolledCount:</b> Contador en vivo. Sube al inscribirse, baja al cancelar. Determina si la clase está llena.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-history text-blue-500 mt-1 mr-2"></i>
+                            <span><b>historicalEnrolledCount:</b> Solo sube en inscripciones nuevas. Nunca baja. Ideal para métricas históricas de interés.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- JWT Blacklist -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-purple-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fa-solid fa-shield-halved text-2xl text-purple-500 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Seguridad Auth & Redis Blacklist</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Sistema de tokens de doble vida (Access 15m + Refresh 7d) para máxima seguridad móvil.</p>
+                    <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                        <li>Las contraseñas siempre se encriptan con <b>Bcrypt</b>.</li>
+                        <li>Al hacer Logout, los JWT activos se envían a <b>Redis</b>. El sistema los rechaza inmediatamente aunque sigan vigentes.</li>
+                    </ul>
+                </div>
+
+                <!-- Enrollments Lifecycle -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border-l-4 border-blue-500">
+                    <div class="flex items-center mb-4">
+                        <i class="fa-solid fa-calendar-check text-2xl text-blue-500 mr-3"></i>
+                        <h3 class="text-xl font-bold text-gray-800">Reciclaje de Inscripciones</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">Evitamos el error <code>E11000 duplicate key</code> de Mongo gracias al reciclaje inteligente.</p>
+                    <ul class="text-sm text-gray-600 space-y-2 list-disc pl-5">
+                        <li>Si un alumno cancela, su estado pasa a <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">CANCELLED</span>.</li>
+                        <li>Si vuelve a matricularse, el backend recicla ese documento, lo pasa a <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">ACTIVE</span> y reajusta los contadores sin duplicar data.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Módulos REST API -->
+        <section>
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-800"><i class="fa-solid fa-network-wired text-indigo-600 mr-2"></i>Módulos de la API</h2>
+            
+            <div class="space-y-6">
+                <!-- Users -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gray-800 text-white px-6 py-3 font-bold flex items-center">
+                        <i class="fa-solid fa-users w-6"></i> Módulo: Users (Usuarios)
+                    </div>
+                    <div class="p-6 text-sm text-gray-700">
+                        <p class="mb-3">Gestión de estudiantes, profesores y admins. El Administrador tiene control total.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-blue-600 font-mono">POST /users</code> Crea perfil y encripta password.</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-green-600 font-mono">PATCH /users/:id</code> Actualiza perfil/password de forma segura.</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-red-600 font-mono">DELETE /users/:id</code> Soft delete + Cascada (Libera cupos).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classes -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gray-800 text-white px-6 py-3 font-bold flex items-center">
+                        <i class="fa-solid fa-chalkboard-user w-6"></i> Módulo: Classes (Clases y Materias)
+                    </div>
+                    <div class="p-6 text-sm text-gray-700">
+                        <p class="mb-3">Gestión de cursos. Los administradores pueden forzar asignaciones con <code>teacherId</code>.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-blue-600 font-mono">POST /classes</code> Crea clase (valida fechas ISO8601).</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-yellow-600 font-mono">GET /classes/subjects</code> Lista de materias únicas registradas.</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-purple-600 font-mono">POST /classes/sync-enrollments</code> Recalcula y repara cupos (Admin).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enrollments -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-gray-800 text-white px-6 py-3 font-bold flex items-center">
+                        <i class="fa-solid fa-clipboard-list w-6"></i> Módulo: Enrollments (Inscripciones)
+                    </div>
+                    <div class="p-6 text-sm text-gray-700">
+                        <p class="mb-3">El corazón transaccional del sistema. Diseñado tanto para autoservicio (estudiantes) como control (admin).</p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-blue-600 font-mono">POST /enrollments</code> Inscribe tomando ID del Token (Estudiante) o del Body (Admin). Sube contadores.</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-red-600 font-mono">DELETE /enrollments/:id</code> Cancela registro, libera 1 cupo vivo.</div>
+                            <div><code class="bg-gray-100 px-2 py-1 rounded text-green-600 font-mono">GET /enrollments</code> <b>[Reportería]</b> Devuelve toda la trazabilidad histórica cruzada para gráficas.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-400 text-center py-8">
+        <p><i class="fa-solid fa-code text-indigo-400 mr-2"></i> Desarrollado con ❤️ usando NestJS y Docker.</p>
+    </footer>
+
+</body>
+</html>
