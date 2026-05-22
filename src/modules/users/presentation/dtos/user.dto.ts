@@ -25,6 +25,11 @@ export class CreateUserDto {
   @IsEnum(UserRole)
   role: UserRole;
 
+  @ApiProperty({ required: false, example: '+593987654321' })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
   @ApiProperty({ required: false, example: 'Ingeniería en Sistemas' })
   @IsOptional()
   @IsString()
@@ -57,6 +62,26 @@ export class UpdateUserDto {
   @IsString()
   @MinLength(6)
   password?: string;
+
+  @ApiProperty({ required: false, example: '+593987654321' })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  career?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  department?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  studentCode?: string;
 
   @ApiProperty({ required: false, description: 'FCM token para push notifications' })
   @IsOptional()

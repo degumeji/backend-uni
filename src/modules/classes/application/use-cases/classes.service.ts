@@ -78,7 +78,7 @@ export class ClassesService {
       teacher: new Types.ObjectId(assignedTeacherId),
     });
     const saved = await newClass.save();
-    return (saved as any).populate('teacher', 'name email');
+    return (saved as any).populate('teacher', 'name email phone');
   }
 
   async findAll(filters: ClassFilter = {}) {
@@ -95,7 +95,7 @@ export class ClassesService {
 
     return this.classModel
       .find(query)
-      .populate('teacher', 'name email department')
+      .populate('teacher', 'name email department phone')
       .sort({ 'recurrence.startDate': 1 })
       .exec();
   }
@@ -108,7 +108,7 @@ export class ClassesService {
   async findById(id: string) {
     const cls = await this.classModel
       .findById(id)
-      .populate('teacher', 'name email department')
+      .populate('teacher', 'name email department phone')
       .exec();
     if (!cls) throw new NotFoundException(`Clase con id ${id} no encontrada`);
     return cls;
@@ -136,7 +136,7 @@ export class ClassesService {
     }
     return this.classModel
       .findByIdAndUpdate(id, { $set: dto }, { new: true })
-      .populate('teacher', 'name email')
+      .populate('teacher', 'name email phone')
       .exec();
   }
 

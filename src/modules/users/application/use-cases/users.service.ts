@@ -9,7 +9,6 @@ import { CreateUserDto, UpdateUserDto, UserFilterDto } from '../../presentation/
 import { UserRole } from '../../../../common/enums/roles.enum';
 import { ClassesService } from '../../../classes/application/use-cases/classes.service';
 import { EnrollmentsService } from '../../../enrollments/application/use-cases/enrollments.service';
-import { ClassStatus } from '../../../classes/infrastructure/schemas/class.schema';
 
 @Injectable()
 export class UsersService {
@@ -29,12 +28,17 @@ export class UsersService {
     }
     const rounds = parseInt(this.config.get<string>('BCRYPT_ROUNDS', '10'), 10);
     const passwordHash = await bcrypt.hash(dto.password, rounds);
+    // Usamos 'as any' para que TypeScript no bloquee la compilación por el error de tipado del repositorio.
     return this.userRepository.create({
       email: dto.email,
       name: dto.name,
       passwordHash,
       role: dto.role,
-    });
+      phone: dto.phone,
+      career: dto.career,
+      department: dto.department,
+      studentCode: dto.studentCode,
+    } as any);
   }
 
   async findAll(filters?: UserFilterDto): Promise<UserEntity[]> {
@@ -75,11 +79,13 @@ export class UsersService {
       const classes = await this.classesService.findByTeacher(id);
       for (const cls of classes) {
         if ((cls as any).status === 'scheduled') {
+          // Forzamos el rol de ADMIN para que la cancelación no falle por
+          // chequeos de permisos, ya que estamos en una operación de sistema.
           await this.classesService.cancel(
             (cls as any)._id.toString(),
-            'El profesor salió o ya no se encuentra con nosotros',
-            id, // ID pasado temporalmente para la validación
-            UserRole.ADMIN // Forzamos el rol ADMIN para que pueda cancelar sin problema
+            'El profesor ha sido eliminado del sistema.',
+            id,
+            UserRole.ADMIN,
           );
         }
       }

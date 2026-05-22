@@ -218,7 +218,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Nuevo Estudiante\",\n    \"email\": \"nuevo.estudiante@universidad.edu\",\n    \"password\": \"Student123!\",\n    \"role\": \"student\"\n}",
+							"raw": "{\n    \"name\": \"Nuevo Estudiante\",\n    \"email\": \"nuevo.estudiante@universidad.edu\",\n    \"password\": \"Student123!\",\n    \"role\": \"student\",\n    \"phone\": \"+573001234567\",\n    \"career\": \"Ingeniería de Sistemas\",\n    \"studentCode\": \"EST-2024-001\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -253,7 +253,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Nombre Actualizado\"\n}",
+							"raw": "{\n    \"name\": \"Nombre Actualizado\",\n    \"phone\": \"+573009876543\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

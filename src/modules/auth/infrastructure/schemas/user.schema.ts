@@ -28,6 +28,10 @@ export class UserModel {
   @Prop({ default: true })
   isActive: boolean;
 
+  // Para contacto
+  @Prop({ required: false, default: null })
+  phone: string;
+
   // Para profesores
   @Prop({ default: null })
   department: string;

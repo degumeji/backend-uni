@@ -51,7 +51,7 @@ export class EnrollmentsService {
     }
 
     return enrollment.populate([
-      { path: 'class', populate: { path: 'teacher', select: 'name email' } },
+      { path: 'class', populate: { path: 'teacher', select: 'name email phone' } },
     ]);
   }
 
@@ -78,7 +78,7 @@ export class EnrollmentsService {
       })
       .populate({
         path: 'class',
-        populate: { path: 'teacher', select: 'name email department' },
+        populate: { path: 'teacher', select: 'name email department phone' },
       })
       .sort({ createdAt: -1 })
       .exec();
@@ -90,7 +90,7 @@ export class EnrollmentsService {
         class: new Types.ObjectId(classId),
         status: EnrollmentStatus.ACTIVE,
       })
-      .populate('student', 'name email studentCode career')
+      .populate('student', 'name email studentCode career phone')
       .exec();
   }
 
