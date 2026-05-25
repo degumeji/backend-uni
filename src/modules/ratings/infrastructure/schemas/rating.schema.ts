@@ -19,6 +19,10 @@ export class RatingModel {
 
   @Prop({ required: false, type: String })
   comment?: string;
+
+  // Timestamps (administrados automáticamente por Mongoose gracias a timestamps: true)
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const RatingSchema = SchemaFactory.createForClass(RatingModel);
