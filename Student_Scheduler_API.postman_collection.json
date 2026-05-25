@@ -780,6 +780,64 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "Calificar Clase/Profesor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teacherId\": \"{{userId}}\",\n    \"classId\": \"{{classId}}\",\n    \"score\": 5,\n    \"comment\": \"¡Excelente profesor, explicó todo muy bien!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/ratings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ratings"
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Reseñas de Profesor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ratings/teacher/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ratings",
+								"teacher",
+								"{{userId}}"
+							]
+						}
+					}
+				}
+			]
 		}
 	],
 	"variable": [
