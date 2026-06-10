@@ -10,8 +10,10 @@ import { TokenServicePort } from './domain/ports/token.service.port';
 
 // Application Use Cases
 import { LoginUseCase } from './application/use-cases/login.use-case';
+import { RegisterUseCase } from './application/use-cases/register.use-case';
 import { RefreshTokenUseCase } from './application/use-cases/refresh-token.use-case';
 import { LogoutUseCase } from './application/use-cases/logout.use-case';
+import { ForgotPasswordUseCase } from './application/use-cases/forgot-password.use-case';
 
 // Infrastructure Adapters
 import { MongoUserRepository } from './infrastructure/repositories/mongo-user.repository';
@@ -56,8 +58,10 @@ import { RolesGuard } from './presentation/guards/roles.guard';
 
     // ─── Use Cases ──────────────────────────────────────────────────────────
     LoginUseCase,
+    RegisterUseCase,
     RefreshTokenUseCase,
     LogoutUseCase,
+    ForgotPasswordUseCase,
 
     // ─── Strategies & Guards ─────────────────────────────────────────────────
     JwtStrategy,

@@ -23,8 +23,21 @@ async function bootstrap() {
   app.use(compression());
 
   // ─── CORS ───────────────────────────────────────────────────────────────────
+  // En producción se acepta solo orígenes listados en CORS_ORIGINS (csv).
+  // Si CORS_ORIGINS no está definido y estamos en prod, se aceptan apps móviles
+  // (Expo / RN no envían Origin), pero NO navegadores web sin whitelist.
+  const corsOriginsEnv = configService.get<string>('CORS_ORIGINS', '');
+  const allowedOrigins = corsOriginsEnv
+    ? corsOriginsEnv.split(',').map((o) => o.trim()).filter(Boolean)
+    : [];
+
   app.enableCors({
-    origin: nodeEnv === 'production' ? false : '*',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // apps móviles / curl / postman
+      if (nodeEnv !== 'production') return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error(`Origen no permitido por CORS: ${origin}`));
+    },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

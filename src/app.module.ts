@@ -8,6 +8,7 @@ import { ClassesModule } from './modules/classes/classes.module';
 import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { RatingsModule } from './modules/ratings/ratings.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { RatingsModule } from './modules/ratings/ratings.module';
     EnrollmentsModule,
     NotificationsModule,
     RatingsModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

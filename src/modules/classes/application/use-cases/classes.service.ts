@@ -78,7 +78,7 @@ export class ClassesService {
       teacher: new Types.ObjectId(assignedTeacherId),
     });
     const saved = await newClass.save();
-    return (saved as any).populate('teacher', 'name email phone');
+    return saved.populate('teacher', 'name email phone');
   }
 
   async findAll(filters: ClassFilter = {}) {
@@ -156,12 +156,20 @@ export class ClassesService {
   }
 
   async incrementEnrolled(classId: string): Promise<void> {
-    const cls = await this.classModel.findById(classId).exec();
-    if (!cls) throw new NotFoundException('Clase no encontrada');
-    if (cls.enrolledCount >= cls.maxCapacity) {
+    // Operación atómica: sólo incrementa si hay cupo disponible (evita race conditions)
+    const result = await this.classModel
+      .findOneAndUpdate(
+        { _id: new Types.ObjectId(classId), $expr: { $lt: ['$enrolledCount', '$maxCapacity'] } },
+        { $inc: { enrolledCount: 1 } },
+        { new: true },
+      )
+      .exec();
+
+    if (!result) {
+      const cls = await this.classModel.findById(classId).exec();
+      if (!cls) throw new NotFoundException('Clase no encontrada');
       throw new BadRequestException('La clase está llena');
     }
-    await this.classModel.findByIdAndUpdate(classId, { $inc: { enrolledCount: 1 } }).exec();
   }
 
   async decrementEnrolled(classId: string): Promise<void> {

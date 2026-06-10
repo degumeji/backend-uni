@@ -24,8 +24,13 @@ export class RatingsController {
 
   @Get('teacher/:id')
   @ApiOperation({ summary: 'Obtener reseñas y promedio de un profesor' })
-  // Es un endpoint público (o puedes requerir JWT si lo prefieres)
   getTeacherRatings(@Param('id') teacherId: string) {
     return this.ratingsService.getTeacherStats(teacherId);
+  }
+
+  @Get('class/:classId')
+  @ApiOperation({ summary: 'Obtener calificaciones de una clase específica' })
+  getByClass(@Param('classId') classId: string) {
+    return this.ratingsService.getByClass(classId);
   }
 }

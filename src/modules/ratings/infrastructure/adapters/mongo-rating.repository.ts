@@ -22,6 +22,14 @@ export class MongoRatingRepository implements RatingRepositoryPort {
     return ratings.map(this.mapToDomain);
   }
 
+  async findByClassId(classId: string): Promise<Rating[]> {
+    const ratings = await this.ratingModel
+      .find({ classId: new Types.ObjectId(classId) })
+      .sort({ createdAt: -1 })
+      .exec();
+    return ratings.map(this.mapToDomain);
+  }
+
   async getAverageScoreByTeacher(teacherId: string): Promise<number> {
     const result = await this.ratingModel.aggregate([
       { $match: { teacherId: new Types.ObjectId(teacherId) } },

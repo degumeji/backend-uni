@@ -71,6 +71,9 @@ export class ClassModel {
   @Prop({ default: 0 })
   enrolledCount: number;
 
+  @Prop({ default: 0 })
+  historicalEnrolledCount: number;
+
   @Prop({ type: String, enum: ClassStatus, default: ClassStatus.SCHEDULED })
   status: ClassStatus;
 

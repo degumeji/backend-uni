@@ -5,13 +5,13 @@ export type RatingDocument = RatingModel & Document;
 
 @Schema({ timestamps: true, collection: 'ratings' })
 export class RatingModel {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'UserModel', required: true })
   studentId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'UserModel', required: true })
   teacherId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Class', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'ClassModel', required: true })
   classId: Types.ObjectId;
 
   @Prop({ required: true, min: 1, max: 5 })

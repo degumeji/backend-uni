@@ -60,9 +60,38 @@ export class MongoUserRepository implements UserRepositoryPort {
       passwordHash: dto.passwordHash,
       role: dto.role,
       fcmToken: dto.fcmToken ?? null,
+      phone: dto.phone ?? null,
+      isActive: dto.isActive ?? true,
     });
     const saved = await created.save();
     return this.toDomain(saved);
+  }
+
+  async findByPasswordResetToken(token: string): Promise<UserEntity | null> {
+    const doc = await this.userModel
+      .findOne({
+        passwordResetToken: token,
+        passwordResetExpiresAt: { $gt: new Date() },
+      })
+      .exec();
+    return doc ? this.toDomain(doc) : null;
+  }
+
+  async setPasswordResetToken(id: string, token: string, expiresAt: Date): Promise<void> {
+    await this.userModel
+      .findByIdAndUpdate(id, {
+        $set: { passwordResetToken: token, passwordResetExpiresAt: expiresAt },
+      })
+      .exec();
+  }
+
+  async updatePasswordAndClearReset(id: string, passwordHash: string): Promise<void> {
+    await this.userModel
+      .findByIdAndUpdate(id, {
+        $set: { passwordHash },
+        $unset: { passwordResetToken: 1, passwordResetExpiresAt: 1 },
+      })
+      .exec();
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<UserEntity | null> {

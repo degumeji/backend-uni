@@ -3,6 +3,7 @@ import { Rating } from '../entities/rating.entity';
 export interface RatingRepositoryPort {
   save(rating: Rating): Promise<Rating>;
   findByTeacherId(teacherId: string): Promise<Rating[]>;
+  findByClassId(classId: string): Promise<Rating[]>;
   getAverageScoreByTeacher(teacherId: string): Promise<number>;
   hasStudentRatedClass(studentId: string, classId: string): Promise<boolean>;
 }

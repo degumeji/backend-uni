@@ -29,4 +29,8 @@ export class RatingsService {
     const average = await this.ratingRepository.getAverageScoreByTeacher(teacherId);
     return { average, totalReviews: ratings.length, reviews: ratings };
   }
+
+  async getByClass(classId: string): Promise<Rating[]> {
+    return this.ratingRepository.findByClassId(classId);
+  }
 }
