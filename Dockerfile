@@ -1,6 +1,7 @@
 # ─── Stage 1: Development ────────────────────────────────────────────────────
 FROM node:20-alpine AS development
 WORKDIR /app
+RUN npm install -g npm@11
 COPY package*.json ./
 RUN npm install
 COPY . .
@@ -10,6 +11,7 @@ CMD ["npm", "run", "start:dev"]
 # ─── Stage 2: Builder ────────────────────────────────────────────────────────
 FROM node:20-alpine AS builder
 WORKDIR /app
+RUN npm install -g npm@11
 COPY package*.json ./
 RUN npm ci
 COPY . .
@@ -19,6 +21,7 @@ RUN npm run build
 FROM node:20-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
+RUN npm install -g npm@11
 
 COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
