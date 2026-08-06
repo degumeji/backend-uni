@@ -77,7 +77,7 @@ open http://localhost:3000/docs
 POST /api/v1/auth/login          → { email, password }
 POST /api/v1/auth/refresh        → { refreshToken }
 POST /api/v1/auth/logout         → Bearer token
-POST /api/v1/auth/me             → Bearer token
+GET  /api/v1/auth/me             → Bearer token
 ```
 
 ### Users (admin)
